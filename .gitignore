@@ -1,0 +1,83 @@
+# Stock Picker Plus
+# A股智能选股系统 - 多因子策略 + 三维评分 + 自动推送
+
+## 🎯 项目简介
+
+**Stock Picker Plus** 是一个功能完整的A股量化选股系统，专为A股市场设计，基于免费稳定的Baostock数据源，提供多因子策略、三维评分、批量查询、双格式输出（Markdown+Excel）和自动推送功能。
+
+## ✨ 核心特性
+
+- **多因子策略**：估值40% + 盈利30% + 规模30%
+- **三维评分**：基本面40% + 技术面35% + 情绪面25%（需Tavily API）
+- **高性能**：10线程批量查询 + 智能缓存（全市场15分钟 → 缓存2秒）
+- **双输出**：Markdown报告（简洁） + Excel（12个中文字段）
+- **自动推送**：QQ消息 + 文件附件
+- **回测引擎**：支持A股规则（T+1、印花税、手续费）
+- **完整文档**：README + QUICKSTART + API文档
+
+## 🚀 快速开始
+
+```bash
+# 克隆仓库
+git clone https://github.com/striferxu/stock-picker-plus.git
+cd stock-picker-plus
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 快速采样（20秒出结果）
+python cli/picker_cli.py --sample
+
+# 全市场扫描（15分钟）
+python cli/picker_cli.py --no-sample
+```
+
+## 📊 输出示例
+
+```
+reports/daily/
+├── report_20260413_0900.md          # Markdown报告
+└── stock_pool_20260413_0900.xlsx   # Excel详细数据
+```
+
+## 📚 文档
+
+- [完整文档](https://striferxu.github.io/stock-picker-plus/) (GitHub Pages)
+- [快速上手](QUICKSTART.md)
+- [API参考](docs/DATA_FETCHER.md)
+- [合并报告](MERGE_REPORT.md)
+
+## 🔧 配置
+
+编辑 `config/strategies.yaml` 即可调整策略参数：
+
+```yaml
+multi_factor:
+  weights:
+    valuation: 0.40
+    profitability: 0.30
+    scale: 0.30
+  filters:
+    min_score: 60
+    min_market_cap: 50
+```
+
+## 📈 策略对比
+
+| 策略 | 适用场景 | 特点 |
+|------|---------|------|
+| 多因子策略 | 全市场平衡 | 推荐，稳健 |
+| 低PE价值 | 寻找低估 | 高风险低估值 |
+| 三维评分 | 综合选股 | 需情绪API |
+
+## 🤝 贡献
+
+欢迎提交Issue和Pull Request！
+
+## 📄 许可证
+
+MIT License - 仅供学习研究，不构成投资建议。
+
+---
+
+**Status**: ✅ Production Ready | **Python**: 3.10+ | **A-share only**
