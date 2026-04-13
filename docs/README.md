@@ -399,7 +399,7 @@ data/cache/
 
 ## 📄 许可证
 
-MIT License - 详见 [LICENSE](LICENSE.html) 文件。
+GNU General Public License v3.0 - 详见 [LICENSE](LICENSE.html) 文件。
 
 ---
 

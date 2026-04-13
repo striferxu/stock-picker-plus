@@ -3,7 +3,7 @@
 > **Stock Picker Plus** - 基于 OpenClaw 的 A 股量化选股 AI Agent
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Baostock](https://img.shields.io/badge/data-Baostock-green.svg)](https://baostock.com)
 
 ---
@@ -684,7 +684,7 @@ python scripts/fast_scan.py
 
 ## 📄 许可证
 
-MIT License - 仅供学习研究，**不构成投资建议**。
+GNU General Public License v3.0 (GPLv3) - 仅供学习研究，**不构成投资建议**。
 
 ---
 
