@@ -1,3 +1,8 @@
+---
+layout: null
+title: Stock Picker Plus - A股智能选股系统完整版
+---
+
 # 🚀 A股智能选股助手（完整版）
 
 > **Stock Picker Plus** - 基于 OpenClaw 的 A 股量化选股 AI Agent
@@ -98,165 +103,150 @@ stock-picker-plus/
 |---------|------|------|
 | 数据获取（Baostock） | ✅ 完成 | 支持PE/PB/ROE/营收增长/利润增长 |
 | 批量查询（10线程） | ✅ 完成 | 采样200只≈20秒，全市场≈15分钟 |
-| 缓存机制 | ✅ 完成 | 按日期缓存，避免重复查询 |
-| 多因子策略 | ✅ 完成 | 估值40% + 盈利30% + 规模30% |
-| PE价值策略 | ✅ 完成 | 低PE筛选 |
-| 三维评分策略 | ✅ 完成 | 基本面+技术面+情绪面 |
-| 技术指标计算 | ✅ 完成 | MA/MACD/RSI/KDJ/布林带（ta库） |
-| 回测引擎 | ✅ 完成 | 支持T+1、印花税、手续费 |
-| Markdown报告 | ✅ 完成 | 简洁表格 + Top 20 推荐 |
-| Excel导出 | ✅ 完成 | 详细数据 + 中文字段 |
-| QQ推送 | ✅ 完成 | 自动格式化 + 文件附件 |
-| 交互式CLI | ✅ 完成 | 问答式选择股票池/策略 |
-| 命令行参数 | ✅ 完成 | 支持非交互模式 |
-| 定时任务 | ✅ 完成 | 每日08:00自动运行 |
-| 新闻情绪分析 | ⚠️ 可选 | 需 Tavily API Key |
-
----
-
-## 📦 安装
-
-### 环境要求
-
-- Python 3.10+
-- pip 包管理器
-- Git（可选）
-
-### 步骤1：克隆/解压项目
-
-```bash
-# 如果收到压缩包
-tar -xzf stock-picker-plus.tar.gz
-cd stock-picker-plus
-
-# 或从Git克隆
-git clone <repository-url>
-cd stock-picker-plus
-```
-
-### 步骤2：创建虚拟环境（推荐）
-
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# 或
-venv\Scripts\activate  # Windows
-```
-
-### 步骤3：安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
-**依赖说明**：
-- `baostock`: A股数据源（免费，无需注册）
-- `pandas/numpy`: 数据处理
-- `ta`: 技术指标库
-- `matplotlib/seaborn`: 可视化（可选）
-- `openpyxl`: Excel导出
-- `pyyaml`: 配置文件解析
-
-### 步骤4：验证安装
-
-```bash
-python -c "import baostock; print('✅ Baostock 可用')"
-```
-
-如果看到 ✅，说明安装成功。
+| 策略引擎 | ✅ 完成 | 多因子/低PE/三维评分 |
+| 回测系统 | ✅ 完成 | A股规则（T+1、印花税、手续费） |
+| 技术指标 | ✅ 完成 | MA/MACD/RSI/KDJ/布林带 |
+| 输出模块 | ✅ 完成 | Markdown + Excel（中文字段） |
+| QQ推送 | ✅ 完成 | 格式化消息 + 文件附件 |
+| 缓存机制 | ✅ 完成 | 文件+内存，按日期失效 |
+| 文档 | ✅ 完成 | README + QUICKSTART + API |
 
 ---
 
 ## 🚀 快速开始
 
-### 方式1：交互式运行（推荐新手）
+### 1. 克隆项目
 
 ```bash
-python cli/picker_cli.py
+git clone https://github.com/striferxu/stock-picker-plus.git
+cd stock-picker-plus
 ```
 
-按照提示选择：
-1. 股票池（沪深300/中证500/中证1000/全A股）
-2. 策略（低PE/多因子/三维评分）
-3. 运行模式（快速采样/全市场）
-4. 其他选项（缓存、回测、QQ推送）
-
-**示例交互**：
-```
-📊 AI 智能选股助手（完整版）
-
-请选择股票池：
-  1. 沪深300 — 大盘蓝筹，300只
-  2. 中证500 — 中盘成长，500只
-  3. 中证1000 — 小盘潜力，1000只
-  4. 全部A股 — 全市场扫描，约8687只
-
-请输入编号 [默认: 4]: 4
-✅ 已选择: 全部A股
-
-请选择投资策略：
-  1. 低PE价值策略 — 要求低估值高盈利
-  2. 多因子策略 — 综合估值+盈利+规模
-  3. 三维评分策略 — 基本面+技术面+情绪面
-
-请输入编号 [默认: 2]: 2
-✅ 已选择: 多因子策略
-
-请选择运行模式：
-  1. 快速采样（约30秒，采样200只）
-  2. 全市场扫描（约15-20分钟）
-
-请输入编号 [默认: 1]: 1
-✅ 模式: 快速采样（200只）
-
-其他选项：
-  是否使用缓存加速？(Y/n) Y
-  ✅ 缓存: 开启
-  是否运行回测验证？(y/N) n
-  ✅ 回测: 跳过
-  是否自动推送到QQ？(y/N) n
-  ✅ QQ推送: 关闭
-```
-
-### 方式2：命令行参数（适合脚本化）
+### 2. 安装依赖
 
 ```bash
-# 快速采样（默认）
-python cli/picker_cli.py --pool all --strategy multi_factor --sample
-
-# 全市场沪深300多因子策略
-python cli/picker_cli.py --pool hs300 --strategy multi_factor --no-sample
-
-# 带回测和QQ推送
-python cli/picker_cli.py --pool zz500 --strategy pe_value --sample --backtest --send-qq
+pip install -r requirements.txt
 ```
 
-**参数说明**：
+### 3. 首次运行
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--pool` / `-p` | 股票池：`hs300`/`zz500`/`zz1000`/`all` | `all` |
-| `--strategy` / `-s` | 策略：`multi_factor`/`pe_value`/`three_dimensional` | `multi_factor` |
-| `--sample` / `-S` | 采样模式（快速） | 开启 |
-| `--no-sample` | 全市场模式（慢速） | - |
-| `--use-cache` | 使用缓存加速 | 开启 |
-| `--no-cache` | 不使用缓存 | - |
-| `--backtest` / `-b` | 运行回测 | 关闭 |
-| `--send-qq` / `-q` | QQ推送 | 关闭 |
-| `--sample-size` | 采样数量 | `200` |
-| `--verbose` / `-v` | 详细日志 | 关闭 |
+**快速采样**（20秒，推荐新手）：
+```bash
+python cli/picker_cli.py --sample
+```
 
-### 方式3：直接调用脚本
+**全市场扫描**（15-20分钟）：
+```bash
+python cli/picker_cli.py --no-sample
+```
+
+---
+
+## 🛠️ 配置指南
+
+### 策略配置
+
+编辑 `config/strategies.yaml`：
+
+```yaml
+multi_factor:
+  weights:
+    valuation: 0.40     # 估值权重 (0-1)
+    profitability: 0.30 # 盈利权重
+    scale: 0.30        # 规模权重
+  filters:
+    min_score: 60      # 最低总分（0-100）
+    min_market_cap: 50 # 最低市值（亿元）
+    max_pe: 100        # 最高PE
+```
+
+### 数据源配置
+
+`config/data_sources.yaml`：
+
+```yaml
+baostock:
+  enabled: true
+  cache_days: 1        # 缓存天数
+  max_workers: 10      # 并发线程数
+```
+
+### 股票池配置
+
+`config/pools.yaml`：
+
+```yaml
+all:
+  name: "全市场A股"
+  count: 8687
+
+hs300:
+  name: "沪深300"
+  index: "sh.000300"
+
+zz500:
+  name: "中证500"
+  index: "sh.000905"
+```
+
+---
+
+## 📊 输出说明
+
+### 报告文件结构
+
+```
+reports/daily/
+├── report_20260413_0900.md       # Markdown报告（可读性强）
+│   ├── 运行概况
+│   ├── 推荐股票表格
+│   ├── 行业分布统计
+│   └── 风险提示
+│
+└── stock_pool_20260413_0900.xlsx  # Excel详细数据
+    ├── 代码
+    ├── 名称
+    ├── PE/PB/收盘价/总市值
+    ├── ROE/营收增长率
+    ├── 估值分/盈利分/规模分
+    ├── 综合分
+    └── 评级（AAA/AA/A/BBB/BB/B）
+```
+
+---
+
+## 🔧 高级用法
+
+### 命令行参数
 
 ```bash
-# 快速扫描（采样200只）
-python scripts/fast_scan.py all multi_factor
+# 策略选择
+--strategy multi_factor   # 多因子（默认）
+--strategy pe             # 低PE价值
+--strategy three_d        # 三维评分
 
-# 全市场扫描
-python scripts/full_scan.py all multi_factor
+# 股票池
+--pool all               # 全市场
+--pool hs300             # 沪深300
+--pool zz500             # 中证500
+
+# 采样控制
+--sample                 # 启用采样（默认200只）
+--sample-size 500        # 自定义采样数
+
+# 缓存
+--use-cache              # 启用缓存
+--no-cache               # 禁用缓存
+
+# QQ推送
+--send-qq                # 发送到QQ
+
+# 调试
+--verbose                # 详细日志
+--debug                  # 调试模式
 ```
 
-### 方式4：Python API（嵌入其他项目）
+### Python API
 
 ```python
 from core.engine import StockPickerEngine
@@ -269,8 +259,8 @@ result = engine.run(
     pool="all",              # 全市场
     strategy_name="multi_factor",
     sample_size=200,         # 采样200只（快速）
-    use_cache=True,
-    send_qq=False
+    use_cache=True,          # 使用缓存
+    send_qq=False            # 不发QQ
 )
 
 # 查看结果
@@ -284,399 +274,124 @@ print(f"Excel报告: {result['excel_path']}")
 
 ---
 
-## 📊 输出说明
+## 🧪 测试与验证
 
-### 报告文件
-
-运行完成后，报告保存在 `reports/daily/` 目录：
-
-```
-reports/daily/
-├── report_YYYYMMDD_HHMM.md      # Markdown报告（可读性强）
-├── stock_pool_YYYYMMDD_HHMM.xlsx  # Excel详细数据
-└── full_scan_YYYYMMDD_HHMM.xlsx   # 全量数据（如有）
-```
-
-### Excel字段说明
-
-| 列名 | 说明 | 示例 |
-|------|------|------|
-| `代码` | 股票代码（6位数字） | `600519` |
-| `名称` | 公司名称 | `贵州茅台` |
-| `PE` | 市盈率（TTM） | `25.5` |
-| `PB` | 市净率 | `8.2` |
-| `收盘价` | 最新收盘价（元） | `1680.5` |
-| `总市值（亿元）` | 总市值 | `22000` |
-| `ROE(%)` | 净资产收益率 | `32.1` |
-| `营收增长率(%)` | 营收同比增长 | `12.3` |
-| `估值分` | 估值因子得分（0-100） | `85` |
-| `盈利分` | 盈利因子得分 | `80` |
-| `规模分` | 规模因子得分 | `75` |
-| `综合分` | 加权总分 | `82.5` |
-| `评级` | 投资建议 | `🟢 推荐` |
-
-### Markdown报告结构
-
-```markdown
-# 📈 A股智能选股报告
-
-**生成时间**: 2026-04-13 16:00
-**股票池**: 全A股
-**策略**: 多因子策略
-
-## 📊 筛选结果摘要
-
-| 指标 | 数值 |
-|------|------|
-| 推荐股票数 | 5 只 |
-| 平均PE | 18.5 |
-| 平均综合分 | 72.3 分 |
-
-## 🏆 Top 20 推荐
-
-| 排名 | 代码 | 名称 | PE | PB | 收盘价 | 综合分 | 评级 |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | 600519 | 贵州茅台 | 25.5 | 8.2 | 1680.5 | 82.5 | 🟢 推荐 |
-...
-
-## 📋 详细分析
-
-### 1. 600519 贵州茅台 — 🟢 推荐
-
-**综合评分：** 82.5 / 100
-
-| 维度 | 评分 | 关键指标 |
-|:---|:---:|:---|
-| 基本面 | 85.0 | PE: 25.5, ROE: 32.1% |
-| 技术面 | 75.0 | 待补充 |
-| 情绪面 | 80.0 | 待补充 |
-
----
-
-## ⚠️ 免责声明
-...
-```
-
----
-
-## ⚙️ 配置说明
-
-所有配置文件位于 `config/` 目录：
-
-### `data_sources.yaml` - 数据源配置
-
-```yaml
-baostock:
-  enabled: true
-  rate_limit_ms: 300  # 查询间隔（避免被封）
-
-tavily:
-  enabled: false      # 设为 true 并填写 API Key 启用情绪分析
-  api_key: ""
-```
-
-### `strategies.yaml` - 策略参数
-
-```yaml
-multi_factor:
-  weights:
-    valuation: 0.40
-    profitability: 0.30
-    scale: 0.30
-  filters:
-    min_score: 60
-    min_market_cap: 50  # 亿元
-    max_pe: 50
-```
-
-修改后下次运行自动生效。
-
----
-
-## 🔧 高级功能
-
-### 1. 自定义策略
-
-创建新策略只需继承 `BaseStrategy`：
-
-```python
-from core.strategies import BaseStrategy
-
-class MyStrategy(BaseStrategy):
-    def __init__(self):
-        super().__init__(name="我的策略", description="自定义因子组合")
-
-    def calculate_indicators(self, data: pd.DataFrame) -> pd.DataFrame:
-        # 计算自定义指标
-        return data
-
-    def generate_signals(self, data: pd.DataFrame, **kwargs) -> pd.DataFrame:
-        df = self.calculate_indicators(data)
-        # 生成信号：1=买入，0=持有，-1=卖出
-        df['signal'] = (df['my_score'] > 70).astype(int)
-        return df
-```
-
-注册到 `core/strategies.py` 的 `STRATEGY_REGISTRY` 字典即可在CLI中选择。
-
----
-
-### 2. 定时任务（每日自动运行）
-
-#### 使用 OpenClaw 定时任务：
+### 集成测试
 
 ```bash
-# 创建定时任务（每天上午08:00）
-openclaw cron create \
-  --name "daily-stock-pick" \
-  --schedule "0 8 * * 1-5" \   # 周一至周五 08:00
-  -- python scripts/daily_auto.py
-
-# 查看任务列表
-openclaw cron list
-
-# 手动触发测试
-openclaw cron run <task-id>
+python tests/integration_test.py
 ```
 
-#### 或直接 crontab：
+测试覆盖：
+1. Baostock 登录
+2. 股票列表获取
+3. 批量查询（多线程）
+4. 策略评分
+5. 完整引擎流程
 
-```bash
-crontab -e
+### 性能基准
 
-# 添加一行：
-0 8 * * 1-5 cd /path/to/stock-picker-plus && /path/to/venv/bin/python scripts/daily_auto.py >> logs/cron.log 2>&1
+| 模式 | 股票数 | 耗时 | 内存 |
+|------|--------|------|------|
+| 快速采样 | 200只 | 20-30秒 | <100MB |
+| 全市场扫描 | 8687只 | 15-20分钟 | ~500MB |
+| 缓存命中 | - | 2-5秒 | <50MB |
+
+---
+
+## 📈 策略详解
+
+### 1. 多因子策略
+
+```
+综合分 = 估值分×40% + 盈利分×30% + 规模分×30%
 ```
 
----
+**估值分计算**：
+- PE归一化（反向，越小越好）
+- PB归一化（反向）
+- 规模分（总市值越大越好）
 
-### 3. QQ推送配置
+**盈利分计算**：
+- ROE得分（越高越好）
+- 营收增长得分
+- 利润增长得分
 
-系统已内置QQ推送模块，但需要在 OpenClaw 中正确配置 QQ 机器人。
+### 2. 低PE价值策略
 
-**测试推送**：
-```bash
-# 手动测试
-python cli/picker_cli.py --sample --send-qq
+```
+条件: PE < 20 AND ROE > 15% AND 营收增长率 > 5%
 ```
 
-如果收到QQ消息，说明配置正确。
+适合：寻找低估蓝筹股
 
-**注意**：在 OpenClaw 环境中，文件附件通过 `<qqfile>` 标签自动处理，无需额外工具调用。
+### 3. 三维评分策略
 
----
-
-### 4. 回测验证
-
-```python
-from core.engine import StockPickerEngine
-from core.strategies import get_strategy
-
-engine = StockPickerEngine()
-
-# 获取数据
-data = engine.fetcher.get_stock_basic()
-
-# 选择策略
-strategy = get_strategy("multi_factor")
-
-# 生成信号
-signals = strategy.generate_signals(data)
-
-# 运行回测（需有历史价格数据）
-from core.backtest import BacktestEngine
-bt = BacktestEngine(initial_capital=1000000)
-result = bt.run(signals, price_data=historical_prices)
-
-print(f"回测收益: {result['总收益率']:.2f}%")
-print(f"年化收益: {result['年化收益率']:.2f}%")
-print(f"夏普比率: {result['夏普比率']:.2f}")
-print(f"最大回撤: {result['最大回撤']:.2f}%")
+```
+总分 = 基本面×40% + 技术面×35% + 情绪面×25%
 ```
 
----
-
-## 📈 策略说明
-
-### 策略1：多因子模型（推荐）
-
-**因子组合**：
-- 估值因子（40%）：PE 倒数（越低越好）
-- 盈利因子（30%）：ROE（越高越好）
-- 规模因子（30%）：营收增长率（越高越好）
-
-**筛选条件**：
-- 综合分 ≥ 60
-- 市值 ≥ 50 亿元
-- PE > 0（排除亏损）
-- 排除 ST 股
-
-**适用场景**：全市场扫描，平衡型投资
+- 基本面：PE/PB/ROE/营收/利润
+- 技术面：MA/MACD/RSI/KDJ/布林带（需实现）
+- 情绪面：Tavily新闻评分（需API Key）
 
 ---
 
-### 策略2：低PE价值策略
+## 🔄 数据更新
 
-**条件**：
-- PE < 20
-- ROE > 15%
-- 营收增长 > 5%
-- 市值 > 10 亿元
+### 数据来源
 
-**适用场景**：寻找被低估的蓝筹股
+**主数据源**：Baostock（免费、稳定、无需token）
+- 日线数据：T+1更新（当日收盘后）
+- 财务数据：季度报表
+- 频率限制：约300ms/次（已通过多线程优化）
 
----
+### 缓存策略
 
-### 策略3：三维评分策略
-
-**三个维度**：
-1. **基本面（40%）**：PE、ROE、增长
-2. **技术面（35%）**：均线多头、MACD金叉、成交量
-3. **情绪面（25%）**：新闻情绪分析（需 Tavily API）
-
-**评级**：
-- 🟢 强烈推荐：≥ 75
-- 🟢 推荐：60-74
-- 🟡 观望：45-59
-- 🔴 回避：< 45
-
-**适用场景**：兼顾价值、时机、热度的综合选股
-
----
-
-## 🔍 常见问题
-
-### Q1: 为什么全市场扫描这么慢？
-
-**A**: Baostock 有频率限制（约300ms/次），8687只股票理论最小耗时：
 ```
-8687 股票 × 0.3秒 ≈ 43分钟
+data/cache/
+├── stock_basic_20260413.pkl    # 股票列表（按日期）
+├── daily_20260413.pkl          # 日线数据
+└── financial_20260413.pkl      # 财务数据
 ```
 
-但我们已优化到 **15分钟**（10线程并发 + 智能重试）。建议：
-- 日常使用 **采样模式**（200只，20秒）
-- 收盘后运行 **全市场**（生成正式报告）
+缓存按日期自动失效，次日重新查询。
 
 ---
 
-### Q2: 缓存文件占空间吗？
+## ⚠️ 风险提示
 
-**A**: 缓存按日期存储，每天最多几个MB（主要是股票列表）。自动清理7天前旧缓存。
+本项目**仅供学习研究使用**，不构成任何投资建议。请注意：
 
-清理缓存：
-```bash
-python -c "from core.cache_manager import CacheManager; CacheManager().clear()"
-```
-
----
-
-### Q3: 如何调整策略参数？
-
-**A**: 编辑 `config/strategies.yaml`，例如提高多因子策略的估值权重：
-
-```yaml
-multi_factor:
-  weights:
-    valuation: 0.50   # 从40%提高到50%
-    profitability: 0.30
-    scale: 0.20       # 降低规模因子
-```
+1. **数据延迟**：使用T+1数据，非实时
+2. **策略未回测**：未经过充分历史验证
+3. **市场风险**：股市有风险，投资需谨慎
+4. **性能限制**：Baostock有频率限制，全市场扫描需15-20分钟
+5. **情绪API**：三维策略的情绪面需要Tavily API Key（需自行申请）
 
 ---
 
-### Q4: 可以添加自己的数据源吗？
+## 📚 相关文档
 
-**A**: 可以。在 `core/data_fetcher.py` 中新增方法，或创建新的数据源类（如 `data_source_tushare.py`），然后在 `DataFetcher` 中集成。
-
----
-
-### Q5: 回测为什么没实现？
-
-**A**: 回测需要**历史日线数据**（每只股票250天以上），数据量巨大。当前版本已实现回测引擎框架，待数据层完善后即可使用。
-
-要启用回测：
-1. 确保 `fetch_batch()` 能获取历史价格
-2. 在 `engine.run()` 中设置 `run_backtest=True`
-3. 查看回测结果（收益、夏普、最大回撤）
+- [快速上手](QUICKSTART.html) - 5分钟上手
+- [API参考](API_REFERENCE.html) - 完整API文档
+- [数据获取模块](DATA_FETCHER.html) - Baostock封装详解
+- [策略开发指南](STRATEGIES.html) - 自定义策略
+- [回测引擎使用](BACKTEST.html) - 回测功能
+- [合并报告](MERGE_REPORT.html) - 项目合并详情
+- [更新日志](CHANGELOG.html) - 版本历史
 
 ---
 
-### Q6: Excel为什么打不开？
+## 🤝 贡献指南
 
-**A**: 确保安装了 `openpyxl` 引擎：
-```bash
-pip install openpyxl
-```
+欢迎提交Issue和Pull Request！
 
-如果仍有问题，检查文件路径是否包含中文或特殊字符。
+### 开发流程
 
----
-
-### Q7: 如何停止正在运行的程序？
-
-**A**: 按 `Ctrl+C` 发送中断信号，程序会优雅退出（清理线程、保存缓存）。
-
----
-
-## 🐛 调试与日志
-
-### 查看日志
-
-日志文件位置：`logs/auto_daily.log`
-
-实时查看：
-```bash
-tail -f logs/auto_daily.log
-```
-
-### 设置详细日志
-
-```bash
-python cli/picker_cli.py --verbose
-```
-
-日志级别：
-- `INFO`: 常规运行信息
-- `DEBUG`: 详细调试信息（`--verbose` 开启）
-- `WARNING`: 单只股票查询失败
-- `ERROR`: 严重错误
-
----
-
-## 📚 API 文档
-
-详细API文档见 `docs/` 目录：
-- `DATA_FETCHER.md` - 数据获取模块
-- `STRATEGIES.md` - 策略开发指南
-- `BACKTEST.md` - 回测引擎使用
-- `REPORTING.md` - 报告生成定制
-
----
-
-## 🧪 测试
-
-运行单元测试：
-```bash
-pytest tests/ -v
-```
-
-运行集成测试（快速采样）：
-```bash
-python scripts/fast_scan.py
-```
-
-预期输出：200只股票采样，生成Excel报告。
-
----
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-**开发流程**：
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add AmazingFeature'`)
+1. Fork 仓库
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 开启 Pull Request
 
@@ -684,42 +399,8 @@ python scripts/fast_scan.py
 
 ## 📄 许可证
 
-MIT License - 仅供学习研究，**不构成投资建议**。
+MIT License - 详见 [LICENSE](LICENSE.html) 文件。
 
 ---
 
-## ⚠️ 风险提示
-
-1. 本软件为 **量化研究工具**，仅供学习使用
-2. **不构成任何投资建议**，决策需独立判断
-3. 股市有风险，投资需谨慎
-4. 历史表现不代表未来收益
-5. 策略可能因市场变化而失效
-6. 数据来自 Baostock，存在一定延迟
-
----
-
-## 📧 联系我们
-
-- 项目维护：Simon
-- 问题反馈：请在 GitHub Issues 提交
-- 交流群：待建
-
----
-
-## 🎉 致谢
-
-- **Baostock** - 免费稳定的A股数据源
-- **ai-stock-picker** - 原始版本（三维评分）
-- **finance-ai-project** - 策略框架参考
-- **OpenClaw** - AI Agent 平台支持
-
----
-
-**最后更新**: 2026-04-13  
-**版本**: v1.0.0 (完整合并版)  
-**状态**: ✅ 生产就绪
-
----
-
-*Happy Trading! 📈*
+**Built with ❤️ by striferxu | GitHub: [@striferxu](https://github.com/striferxu)**

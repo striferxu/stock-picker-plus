@@ -1,3 +1,8 @@
+---
+layout: null
+title: Merge Report
+---
+
 # 🏆 Stock Picker Plus - 项目合并完成报告
 
 ## 📋 合并概述
@@ -174,7 +179,7 @@ stock-picker-plus/              ← 统一项目
 ```
 stock-picker-plus.tar.gz  (完整项目包)
 ├── README.md              (项目说明)
-├── QUICKSTART.md          (5分钟上手)
+├── QUICKSTART.md          (5分钟快速上手)
 ├── main.py                (主入口)
 ├── requirements.txt       (依赖列表)
 ├── config/                (4个YAML配置)
@@ -210,7 +215,7 @@ python cli/picker_cli.py --pool hs300 --no-sample
 
 ### 方式3：脚本直接运行
 ```bash
-python scripts/fast_scan.py          # 采样200只
+python scripts/fast_scan.py          # 快速采样
 python scripts/full_scan.py          # 全市场
 python scripts/daily_auto.py         # 每日自动
 ```
@@ -247,15 +252,11 @@ python tests/integration_test.py
 预期输出：
 ```
 📊 集成测试 - 核心流程验证
-【Step 1】初始化数据模块...
-✅ 初始化成功
-【Step 2】获取股票列表...
-✅ 获取 8687 只股票
-【Step 3】批量查询（采样20只）...
-✅ 查询成功: 20 只
-【Step 4】策略评分...
-✅ 筛选完成: 2 只推荐
-...
+【Step 1】初始化数据模块... ✅
+【Step 2】获取股票列表... ✅ (8687只)
+【Step 3】批量查询（采样20只）... ✅ (20只)
+【Step 4】策略评分... ✅ (筛选: 2只推荐)
+【Step 5】引擎测试（采样50只）... ✅
 ✅ 所有测试通过！系统已就绪。
 ```
 
@@ -266,8 +267,8 @@ python tests/integration_test.py
 - **README.md** - 完整项目介绍、安装、配置、API
 - **QUICKSTART.md** - 5分钟快速上手指南
 - **docs/DATA_FETCHER.md** - 数据获取模块详解
-- （待补充）STRATEGIES.md - 策略开发指南
-- （待补充）BACKTEST.md - 回测引擎使用
+- **docs/STRATEGIES.md** - 策略开发指南
+- **docs/BACKTEST.md** - 回测引擎使用教程
 
 ---
 

@@ -1,3 +1,8 @@
+---
+layout: null
+title: Changelog
+---
+
 # Changelog
 
 All notable changes to Stock Picker Plus will be documented in this file.

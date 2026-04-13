@@ -1,3 +1,8 @@
+---
+layout: null
+title: Backtest Engine Guide
+---
+
 # 回测引擎使用指南
 
 `core/backtest.py` 提供A股规则下的回测功能，支持印花税、手续费和T+1交易限制。

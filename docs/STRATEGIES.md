@@ -1,3 +1,8 @@
+---
+layout: null
+title: Strategy Development Guide
+---
+
 # 策略开发指南
 
 本文档说明如何开发自定义选股策略。
