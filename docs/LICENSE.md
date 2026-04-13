@@ -3,7 +3,11 @@ layout: null
 title: MIT License
 ---
 
-MIT License
+← [返回文档首页](/)
+
+---
+
+# MIT License
 
 Copyright (c) 2026 Stock Picker Plus
 
