@@ -1,0 +1,22 @@
+# GitHub Pages 配置说明
+
+## 激活GitHub Pages
+
+1. 访问仓库 Settings → Pages
+2. Source 选择：`Deploy from a branch`
+3. Branch: `master` (或 `main`，根据实际分支名)
+4. Folder: `/root` (或 `/docs`，如果希望只部署docs子目录)
+5. 点击 Save
+
+## 访问地址
+
+配置成功后，站点将可用：
+- https://striferxu.github.io/stock-picker-plus/
+
+## 自定义域名（可选）
+
+在 Settings → Pages → Custom domain 中配置自己的域名。
+
+## 更新
+
+每次推送 `master` 分支后，GitHub Pages 会自动重新构建。
