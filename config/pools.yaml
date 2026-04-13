@@ -1,0 +1,35 @@
+# 股票池配置 - A股智能选股
+
+pools:
+  hs300:
+    name: "沪深300"
+    code: "hs300"
+    index_code: "000300"
+    description: "大盘蓝筹，300只"
+    baostock_index: "hs300"
+
+  zz500:
+    name: "中证500"
+    code: "zz500"
+    index_code: "000905"
+    description: "中盘成长，500只"
+    baostock_index: "zz500"
+
+  zz1000:
+    name: "中证1000"
+    code: "zz1000"
+    index_code: "000852"
+    description: "小盘潜力，1000只"
+    baostock_index: "zz1000"
+
+  all:
+    name: "全A股"
+    code: "all"
+    description: "全市场扫描，约8687只"
+    baostock_index: "all"
+
+# 输出配置
+output:
+  reports_dir: "reports/daily"
+  backup_dir: "reports/backtest"
+  max_files: 50  # 最多保留多少份报告

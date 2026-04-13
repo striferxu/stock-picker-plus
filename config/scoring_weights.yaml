@@ -1,0 +1,21 @@
+# 评分权重配置 - A股智能选股
+
+# 三维评分策略权重
+three_dimensional:
+  fundamental: 0.40   # 基本面
+  technical: 0.35     # 技术面
+  sentiment: 0.25     # 情绪面
+
+# 多因子策略权重（归一化后）
+multi_factor:
+  valuation: 0.40     # 估值（PE倒数）
+  profitability: 0.30  # 盈利（ROE）
+  scale: 0.30         # 规模（营收增长）
+  # momentum: 0.20    # 动量（可选）
+
+# 评级阈值
+rating_thresholds:
+  strong_buy: 75      # 强烈推荐
+  buy: 60            # 推荐
+  hold: 45           # 观望
+  sell: 0            # 回避
