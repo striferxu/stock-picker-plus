@@ -9,6 +9,7 @@
 import pandas as pd
 import numpy as np
 import ta  # pip install ta
+import logging
 from typing import Dict, Any
 
 logger = logging.getLogger(__name__)

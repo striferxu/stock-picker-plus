@@ -17,11 +17,17 @@ import baostock as bs
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Optional, Dict, Any, List
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+# ============== 全局缓存 ==============
+
+_stock_info_cache: Optional[pd.DataFrame] = None  # 股票基本信息缓存
 
 
 # ============== 全局登录状态 ==============
@@ -127,6 +133,37 @@ def get_stock_basic() -> pd.DataFrame:
 
     logger.info(f"✅ 获取股票列表成功: {len(df)} 只")
     return df
+
+
+def get_stock_info_baostock(bs_code: str) -> Optional[Dict[str, str]]:
+    """
+    获取单只股票基本信息（名称等）
+
+    参数:
+        bs_code: Baostock代码（如 'sh.600519'）
+
+    返回: {'代码': str, '名称': str, '市场': str} 或 None
+    """
+    global _stock_info_cache
+
+    if _stock_info_cache is None:
+        # 首次调用，加载全市场股票列表到缓存
+        df = get_stock_basic()
+        if df.empty:
+            return None
+        # 创建 code -> name 的映射
+        _stock_info_cache = df[['code', 'code_name']].set_index('code')['code_name'].to_dict()
+
+    name = _stock_info_cache.get(bs_code)
+    if name:
+        return {
+            '代码': _extract_code(bs_code),
+            '名称': name,
+            '市场': 'sh' if bs_code.startswith('sh.') else 'sz'
+        }
+
+    logger.debug(f"未找到股票 {bs_code} 的基本信息")
+    return None
 
 
 def get_index_components(index: str = "hs300") -> List[str]:
@@ -470,8 +507,18 @@ class DataFetcher:
     def _load_config(self, path: str) -> Dict:
         import yaml
         try:
-            with open(path, 'r', encoding='utf-8') as f:
-                return yaml.safe_load(f)
+            # 如果路径是目录，加载所有.yaml文件并合并
+            path_obj = Path(path)
+            if path_obj.is_dir():
+                config = {}
+                for yaml_file in path_obj.glob("*.yaml"):
+                    with open(yaml_file, 'r', encoding='utf-8') as f:
+                        config.update(yaml.safe_load(f))
+                return config
+            else:
+                # 单个文件
+                with open(path, 'r', encoding='utf-8') as f:
+                    return yaml.safe_load(f)
         except Exception as e:
             logger.warning(f"加载配置失败: {e}，使用默认")
             return {}
@@ -488,10 +535,10 @@ class DataFetcher:
     def get_fundamental(self, symbol: str) -> Dict:
         return get_financials_baostock(symbol)
 
-    def fetch_batch(self, codes: List[str], fields=None, max_workers=10) -> pd.DataFrame:
+    def fetch_batch(self, codes: List[str], fields=None, max_workers=10, use_cache=False) -> pd.DataFrame:
         if fields is None:
             fields = ['basic', 'valuation', 'financials']
-        return fetch_batch(codes, fields, max_workers)
+        return fetch_batch(codes, fields, max_workers, use_cache)
 
 
 # ============== 初始化与清理 ==============

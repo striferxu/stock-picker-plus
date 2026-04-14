@@ -11,7 +11,7 @@ Author: Simon (with AI Agent)
 import pandas as pd
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import logging
 
 logger = logging.getLogger(__name__)

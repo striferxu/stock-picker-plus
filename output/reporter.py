@@ -11,6 +11,7 @@ Markdown报告生成器 - 完整版
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 import pandas as pd
+import logging
 
 logger = logging.getLogger(__name__)
 
